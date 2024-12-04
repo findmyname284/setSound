@@ -19,11 +19,11 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - run: mvn clean package -DskipTests
-      - run: mkdir findmy && mv target/setSound-1.0.jar target/setSound-1.0-${{ env.build-number }}.jar && cp target/*.jar findmy
+      # - run: mkdir findmy && mv target/setSound-1.0.jar target/setSound-1.0-${{ env.build-number }}.jar && cp target/*.jar findmy
       - uses: actions/upload-artifact@v3
         with:
           name: Package
-          path: findmy
+          path: target
           retention-days: 1
       - uses: marvinpinto/action-automatic-releases@latest
         with:
@@ -31,4 +31,4 @@ jobs:
           automatic_release_tag: "${{ github.run_number }}"
           title: "Automated Build ${{ github.run_number }}"
           prerelease: true
-          files: findmy/*.jar
+          files: target/*.jar
